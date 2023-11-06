@@ -6,7 +6,7 @@ block content
       div(class="mx-auto fs-1 text-primary")= title
 
   if user
-    p Welcome #{user.email} to #{title}
+    p Welcome #[strong #{user.firstName}] to #{title}
     a(href="/sign-out") Logout? 
   else 
     p Welcome to #{title}

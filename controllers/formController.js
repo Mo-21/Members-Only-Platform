@@ -56,23 +56,28 @@ exports.form_signUp_post = [
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
 
-    const user = new User({
-      firstName: req.body.firstname,
-      lastName: req.body.lastname,
-      email: req.body.email,
-      password: req.body.password,
-    });
-
-    if (!errors.isEmpty()) {
-      res.render("formView/signUp_form", {
-        title: "Sign-up",
-        errors: errors.array(),
+    bcrypt.hash(req.body.password, 2, async (err, hashedPassword) => {
+      const user = new User({
+        firstName: req.body.firstname,
+        lastName: req.body.lastname,
+        email: req.body.email,
+        password: hashedPassword,
       });
-      return;
-    } else {
-      await user.save();
-      res.redirect(`/${user.id}/id-check`);
-    }
+
+      if (err || !errors.isEmpty()) {
+        res.render("formView/signUp_form", {
+          title: "Sign-up",
+          errors: errors.array(),
+          err: err,
+        });
+        return;
+      } else {
+        try {
+          await user.save();
+          res.redirect(`/${user.id}/id-check`);
+        } catch (error) {}
+      }
+    });
   }),
 ];
 
