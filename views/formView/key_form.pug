@@ -1,0 +1,21 @@
+extend ../layout
+block content 
+
+    div.error-group 
+      if errors 
+        each error in errors
+          div.alert.alert-danger.alert-dismissible.fade.show
+            .error= error.msg
+            button.btn-close(data-bs-dismiss="alert" aria-label="Close")
+
+    .container
+        h1 One step further to become one of us! 
+        h4 Enter the Invitation Key
+        form(action="" method="POST" class="id-check")
+            div.group
+              .input-group.mb-3
+                input.form-control.form-control-sm.input-id(type="text", id="invitation", name="invitation", placeholder="You can guess it", required)
+            button.btn.btn-primary.btn-sm.button-id(type="submit") Join
+            
+              
+

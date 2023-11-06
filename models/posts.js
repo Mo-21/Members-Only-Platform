@@ -21,6 +21,11 @@ const postsSchema = new Schema({
     immutable: true,
     default: () => Date.now(),
   },
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
 });
 
 postsSchema.virtual("url").get(function () {

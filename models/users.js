@@ -23,12 +23,11 @@ const usersSchema = new Schema({
   password: {
     type: String,
     required: true,
-    maxLength: 20,
+    maxLength: 100,
     minLength: 5,
   },
-  post: {
-    type: mongoose.SchemaTypes.ObjectId,
-    ref: "Post",
+  membershipStatus: {
+    type: Boolean,
   },
 });
 
@@ -36,4 +35,4 @@ usersSchema.virtual("url").get(function () {
   return `/home/${this.id}`;
 });
 
-modules.exports = mongoose.Model("User", usersSchema);
+module.exports = mongoose.model("User", usersSchema);

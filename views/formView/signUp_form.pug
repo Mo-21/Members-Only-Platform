@@ -1,0 +1,36 @@
+extend ../layout
+
+block content 
+
+    div.error-group 
+      if errors 
+        each error in errors
+          div.alert.alert-danger.alert-dismissible.fade.show
+            .error= error.msg
+            button.btn-close(data-bs-dismiss="alert" aria-label="Close")
+
+    .container
+        h1.brand-brand Messenger And More
+        h3 Sign-Up
+        form(action="", method="post")
+            div.group
+              .input-group.mb-3
+                span(class="input-group-text" for="firstname" id="basic-addon1") First name
+                input.form-control.form-control-sm(type="text" id="firstname" name="firstname" required)
+                .input-group.mb-3
+                span(class="input-group-text" for="lastname" id="basic-addon1") Last name
+                input.form-control.form-control-sm(type="text" id="lastname" name="lastname" required)
+              .input-group.mb-3
+                span(class="input-group-text" for="email" id="basic-addon1") Email
+                input.form-control.form-control-sm(type="text" id="email" name="email" required)
+              .input-group.mb-3
+                span(class="input-group-text" for="password" id="basic-addon1") Password
+                input.form-control.form-control-sm(type="password" id="password" name="password" required)
+              .input-group.mb-3
+                span(class="input-group-text" for="passwordConfirmation" id="basic-addon1") Confirm Password
+                input.form-control.form-control-sm(type="password" id="passwordConfirmation" name="passwordConfirmation" required)
+          
+            button.btn.btn-primary.btn-sm(type="submit") Sign-up
+
+        div.mt-4 Already have an account? 
+            a(href="/sign-in") #[strong Sign In] 
