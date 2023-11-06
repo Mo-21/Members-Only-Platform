@@ -37,7 +37,7 @@ const usersSchema = new Schema({
 });
 
 usersSchema.virtual("url").get(function () {
-  return `/home/${this.id}`;
+  return `${this.id}`;
 });
 
 module.exports = mongoose.model("User", usersSchema);
