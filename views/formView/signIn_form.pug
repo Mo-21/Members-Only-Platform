@@ -2,7 +2,14 @@ extend ../layout
 
 block content 
 
-    .container
+    div.error-group 
+      if errors 
+        each error in errors
+          div.alert.alert-danger.alert-dismissible.fade.show
+            .error= error.msg
+            button.btn-close(data-bs-dismiss="alert" aria-label="Close")
+
+    .sign-container
         h1.brand-brand Messenger And More
         h3 Sign-In
         form(action="" method="POST")

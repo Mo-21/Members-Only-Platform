@@ -1,0 +1,21 @@
+extends ../layout
+
+block content
+    div.error-group 
+      if errors 
+        each error in errors
+          div.alert.alert-danger.alert-dismissible.fade.show
+            .error= error.msg
+            button.btn-close(data-bs-dismiss="alert" aria-label="Close")
+
+    .container
+      .row.justify-content-center.mt-5
+        .col-md-8
+          form(action='', method='POST')
+            .form-group.mt-2
+              label(for='title') #[strong Title]
+              input#title.form-control(type='text', name='title', required)
+            .form-group.mt-2
+              label(for='content') #[strong Post]
+              textarea#post.form-control(name='content', rows='5', required)
+            button.btn.btn-primary.create-post(type='submit') Send  
