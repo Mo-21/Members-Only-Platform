@@ -18,12 +18,7 @@ router.get("/:id/post", post_controller.post_create_get);
 router.post("/:id/post", post_controller.post_create_post);
 
 //Post Delete
-router.get("/delete-post", post_controller.post_delete_get);
-router.post("/delete-post", post_controller.post_delete_post);
-
-//Post Update
-router.get("/update-post", post_controller.post_update_get);
-router.post("/update-post", post_controller.post_update_post);
+router.post("/:id/delete-post", post_controller.post_delete_post);
 
 //Registration Routes
 router.get("/sign-in", form_controller.form_signIn_get);
@@ -49,5 +44,8 @@ router.get("/sign-out", function (req, res, next) {
 
 router.get("/:id/id-check", form_controller.form_invitation_key_get);
 router.post("/:id/id-check", form_controller.form_invitation_key_post);
+
+router.get("/:id/admin-check", form_controller.form_admin_get);
+router.post("/:id/admin-check", form_controller.form_admin_post);
 
 module.exports = router;

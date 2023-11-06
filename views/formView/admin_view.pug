@@ -1,0 +1,23 @@
+extends ../layout
+
+block content 
+
+    div.error-group 
+          if errors 
+            each error in errors
+              div.alert.alert-danger.alert-dismissible.fade.show
+                .error= error.msg
+                button.btn-close(data-bs-dismiss="alert" aria-label="Close")
+
+    .sign-container
+        h1 Are 
+            span #[strong You] the admin we are waiting for 
+        h4 If so, enter the admin passkey!
+        form(action="" method="POST" class="id-check")
+            div.group
+              .input-group.mb-3
+                input.form-control.form-control-sm.input-id(type="text", id="adminKey", name="adminKey", placeholder="You cannot guess this one", required)
+            button.btn.btn-primary.btn-sm.button-id(type="submit") Join
+
+        div You are not the admin?
+            a(href="/") Let's go to the main screen then.

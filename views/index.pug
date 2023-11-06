@@ -1,13 +1,51 @@
 extends layout
 
 block content
-  nav(class="navbar navbar-expand-lg navbar-dark bg-dark")
-    div(class="container-fluid")
-      div(class="mx-auto fs-1 text-primary")= title
+  
+  if user
+    nav(class="navbar navbar-expand-lg bg-dark")
+      div(class="container-fluid")
+        div(class="mx-auto fs-1")= title
+  else 
+    nav(class="navbar navbar-expand-lg bg-dark")
+      div(class="container-fluid")
+        div(class="mx-auto fs-1")= title
+        a(href="/sign-in").sign Sign-in
 
   if user
-    p Welcome #[strong #{user.firstName}] to #{title}
-    a(href="/sign-out") Logout? 
+    p.welcome Welcome #[strong #{user.firstName}] to #{title}
+     .post-container.mt-5
+      .row.justify-content-center
+        .col-md-8
+          each post in posts
+            .card.mb-3
+              .card-body
+                h5.card-title.font-weight-bold.text-primary #{post.title}
+                if user.isAdmin
+                  form(action=`${post.url}/delete-post`, method="POST")
+                    input(type="hidden", name="postId", value=postId)
+                    button.btn.btn-danger(type="submit") Delete
+
+                p.card-text.font-weight-normal.text-dark #{post.content}
+                div.post-details
+                  p.card-author.font-weight-light Author: #{`${post.author.firstName} ${post.author.lastName}`}
+                  p.card-date.font-weight-light Post Date: #{post.creation_formatted}
+          else
+            h3 Timeline is empty
+    div 
+      a(href=`/${user.id}/post`) Post
+    div 
+      a(href="/sign-out") Logout?
+
   else 
-    p Welcome to #{title}
-    a(href="/sign-in") Sign-in?
+    p.welcome Welcome!
+    .post-container.mt-5
+      .row.justify-content-center
+        .col-md-8
+          each post in posts
+            .card.mb-3
+              .card-body
+                h5.card-title #{post.title}
+                p.card-content #{post.content}
+          else
+            h3 Timeline is empty

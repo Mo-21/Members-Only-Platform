@@ -7,13 +7,15 @@ const Post = require("../models/posts");
 const User = require("../models/users");
 
 exports.get_all_posts = asyncHandler(async (req, res, next) => {
-  const posts = await Post.find({}).sort({ postDate: -1 }).exec();
-  const authStatus = req.isAuthenticated();
+  const posts = await Post.find({})
+    .sort({ postDate: -1 })
+    .populate("author")
+    .exec();
 
   res.render("index", {
     title: "Messenger and More",
     user: req.user,
-    authStatus: authStatus,
+    authStatus: req.isAuthenticated(),
     posts: posts,
   });
 });
@@ -58,18 +60,10 @@ exports.post_create_post = [
   }),
 ];
 
-exports.post_delete_get = asyncHandler(async (req, res, next) => {
-  res.send("post_delete_get");
-});
-
 exports.post_delete_post = asyncHandler(async (req, res, next) => {
-  res.send("post_delete_post");
-});
-
-exports.post_update_get = asyncHandler(async (req, res, next) => {
-  res.send("post_update_get");
-});
-
-exports.post_update_post = asyncHandler(async (req, res, next) => {
-  res.send("post_update_post");
+  // await Post.findById(req.params.id).exec();
+  const post = await Post.findById(req.params.id).exec();
+  console.log(post);
+  await Post.findByIdAndDelete(req.params.id);
+  res.redirect("/");
 });

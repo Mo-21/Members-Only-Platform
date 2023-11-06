@@ -6,6 +6,7 @@ const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
 
 const User = require("../models/users");
+const Post = require("../models/posts");
 
 exports.form_signIn_get = asyncHandler(async (req, res, next) => {
   res.render("formView/signIn_form", {
@@ -111,10 +112,46 @@ exports.form_invitation_key_post = [
     } else {
       user.membershipStatus = true;
       await user.save();
-      res.render("index", {
-        title: "Messenger and More",
-        user: user,
-      });
+      res.redirect(`/${user.id}/admin-check`);
     }
+  }),
+];
+
+exports.form_admin_get = asyncHandler(async (req, res, next) => {
+  res.render("formView/admin_view", {
+    title: "Are you an admin?",
+  });
+});
+
+exports.form_admin_post = [
+  body("adminKey")
+    .trim()
+    .isLength({ min: 1 })
+    .withMessage("Passkey is Required")
+    .custom((key, { req }) => {
+      return key === "mohammadMalaebIsTheAdmin";
+    })
+    .withMessage("Invalid Admin Passkey!")
+    .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+    const user = await User.findById(req.params.id).exec();
+    const posts = await Post.find({})
+      .sort({ postDate: -1 })
+      .populate("author")
+      .exec();
+
+    if (!errors.isEmpty()) {
+      res.render("formView/admin_view", {
+        title: "Are you an admin?",
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      user.isAdmin = true;
+      await user.save();
+    }
+    res.redirect("/");
   }),
 ];
