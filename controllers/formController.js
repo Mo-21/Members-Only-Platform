@@ -58,13 +58,6 @@ exports.form_signUp_post = [
     const errors = validationResult(req);
 
     bcrypt.hash(req.body.password, 2, async (err, hashedPassword) => {
-      const user = new User({
-        firstName: req.body.firstname,
-        lastName: req.body.lastname,
-        email: req.body.email,
-        password: hashedPassword,
-      });
-
       if (err || !errors.isEmpty()) {
         res.render("formView/signUp_form", {
           title: "Sign-up",
@@ -74,9 +67,17 @@ exports.form_signUp_post = [
         return;
       } else {
         try {
+          const user = new User({
+            firstName: req.body.firstname,
+            lastName: req.body.lastname,
+            email: req.body.email,
+            password: hashedPassword,
+          });
           await user.save();
           res.redirect(`/${user.id}/id-check`);
-        } catch (error) {}
+        } catch (error) {
+          return next(error);
+        }
       }
     });
   }),
