@@ -1,6 +1,6 @@
 # Members Only Clubhouse
 
-## [Live Preview](https://members-only-platform-production.up.railway.app/).
+## [Live Preview](https://members-only-platform-production.up.railway.app/)
 
 Members Only Clubhouse is a web application that provides a platform for members to write and read anonymous posts. Inside the clubhouse, members can see the author of a post, but outside viewers can only see the story and wonder who wrote it. This project uses Passport (local strategy) for authentication and Bcrypt for password hashing. The members are asked to provide invitation key once signed up, which is required, then transferred to another page asking for admin password, which is not required and there is a link to proceed to the main page.
 
@@ -61,4 +61,5 @@ Members Only Clubhouse is a web application that provides a platform for members
    ```bash
    npm run serverstart
    ```
-Happy anonymous posting!
+
+   Happy anonymous posting!
