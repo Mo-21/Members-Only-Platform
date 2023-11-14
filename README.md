@@ -7,7 +7,6 @@ Members Only Clubhouse is a web application that provides a platform for members
 ![Homepage](public/images/main.png)
 ![anonymous homepage page](public/images/main-no-sign-in.png)
 ![Sign in page](public/images/sign-in-page.png)
-![Installation](#installation)
 
 ## Features
 
